@@ -11,6 +11,11 @@ Le POC est **entièrement local** : aucune ressource réseau, aucune CDN, aucune
 aucun service externe. Les vidéos sont **générées sur la machine** à partir de specs de scène
 versionnées, et le site est un site statique sans dépendance runtime.
 
+![Le scroll écrit le temps de la vidéo : on sort du hublot de l'icebreaker et le plan se pose sur la cathédrale de glace](docs/media/scroll-scrub.gif)
+
+*Le scroll n'active pas une lecture : il **écrit** le temps de la vidéo. Le compteur en bas à gauche
+montre le temps réel du plan, les textes apparaissent à des instants précis.*
+
 ---
 
 ## 1. La nouveauté de la vidéo, en une phrase
@@ -32,6 +37,12 @@ Le workflow de la vidéo supprime le hasard en **inversant l'ordre** :
 Le point clé : **le chemin de caméra est l'artefact partagé**. Il est décidé avant la génération et
 ne bouge plus. C'est pour cette raison qu'on peut écrire « ce bloc de texte apparaît à la seconde 9,
 quand la caméra a fini son balayage » — et que ça reste vrai.
+
+![Le même plan, rendu deux fois : à gauche la passe blocking, à droite la passe cinématique](docs/media/comparateur.gif)
+
+*La même prise de vue, deux passes, un seul chemin de caméra. La poignée se déplace, la vidéo avance
+avec le scroll — et la couture tombe toujours sur la même arête de glace. `tests/determinism.mjs`
+mesure cet écart : **0**.*
 
 ## 2. Ce que ce POC rejoue, et avec quoi
 
@@ -70,6 +81,28 @@ Le sélecteur en haut de page bascule **toutes** les séquences entre la passe c
 blocking, **en conservant le temps courant** : on voit le mouvement identique, seule la matière
 change.
 
+### Aperçus
+
+| | |
+|---|---|
+| ![Le hublot de l'icebreaker](docs/media/hero.jpg) | ![Le passage : la caméra traverse](docs/media/passage.jpg) |
+| **01 · Le hublot** — la caméra quitte la cabine | **01 · Le passage** — la coque sort du champ |
+| ![La cathédrale de glace](docs/media/monument.jpg) | ![Le comparateur à 50/50](docs/media/comparateur-50-50.jpg) |
+| **01 · Le monument** — le plan se pose | **Le test** — previz à gauche, final à droite |
+| ![Le fondu au blanc](docs/media/fondu-blanc.jpg) | ![La relique explosée](docs/media/relique.jpg) |
+| **02 · Le blanc** — la transition de section | **03 · La relique** — vue éclatée |
+| ![Le gardien, tiers droit](docs/media/gardien-droite.jpg) | ![Le gardien, tiers gauche](docs/media/gardien-gauche.jpg) |
+| **04 · Le gardien** — la carte occupe la gauche | **04 · Le gardien** — puis la droite |
+| ![Le déploiement plein écran](docs/media/deploiement.jpg) | ![La section workflow](docs/media/workflow.jpg) |
+| **05 · Le déploiement** — le cadre s'ouvre | **Le workflow** — 5 étapes et prompts générés |
+
+| Mobile (390 px) |
+|---|
+| ![Rendu mobile](docs/media/mobile.jpg) |
+
+Ces médias sont **régénérables** : `node tools/media.mjs` reconstruit le site, pilote un vrai
+navigateur, capture et encode les GIF.
+
 ---
 
 ## 4. Architecture
@@ -106,6 +139,7 @@ site/
 tools/
   serve.mjs                  # serveur statique (support des requêtes Range : indispensable au seek)
   build.mjs                  # bundle JS/CSS + copie des assets + posters
+  media.mjs                  # génère les GIF et les captures du README
 
 assets/video/                # 10 MP4 générés (5 concepts × 2 passes)
 assets/img/                  # posters

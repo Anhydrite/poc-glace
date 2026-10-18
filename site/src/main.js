@@ -316,7 +316,9 @@ async function boot() {
 
   stage('ready');
   window.__poc_ready = true;
-  window.__poc = { scrubber, sequences, timelines, get mode() { return mode; } };
+  // `compare` est expose pour les tests et pour la generation des medias
+  // (capture d'un balayage automatique de la poignee).
+  window.__poc = { scrubber, sequences, timelines, compare, get mode() { return mode; } };
 }
 
 /* ------------------------------------------------------------------ */
