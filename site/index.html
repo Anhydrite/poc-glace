@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>BORÉAL — Cinématique pilotée par le scroll, sur le thème de la glace</title>
+    <meta
+      name="description"
+      content="POC de storytelling scroll-driven sur le thème de la glace : la même prise de vue, prévisualisée en blocking puis rendue en cinématique, filmée par le scroll."
+    />
+    <meta name="color-scheme" content="dark" />
+    <link rel="stylesheet" href="./assets/app.css" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 29 9.5v13L16 30 3 22.5v-13z' fill='none' stroke='%237fd8ff' stroke-width='1.6'/%3E%3Cpath d='M16 8v16M9 12l14 8M23 12 9 20' stroke='%23a9ecff' stroke-width='1.2'/%3E%3C/svg%3E" />
+    <meta name="build" content="{{BUILD_TIME}}" />
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+
+    <header class="site-header" id="site-header">
+      <a class="brand" href="#top" aria-label="BORÉAL, retour en haut">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 2 29 9.5v13L16 30 3 22.5v-13z" fill="none" stroke="currentColor" stroke-width="1.4" />
+          <path d="M16 8v16M9 12l14 8M23 12 9 20" stroke="currentColor" stroke-width="1" opacity=".75" />
+        </svg>
+        <span class="brand__word">BORÉAL</span>
+        <span class="brand__sub">archive de la cryosphère</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Sections">
+        <a href="#compare">Le test</a>
+        <a href="#concept-2">Séquence</a>
+        <a href="#relique">Relique</a>
+        <a href="#gardien">Gardien</a>
+        <a href="#workflow">Workflow</a>
+      </nav>
+
+      <div class="mode-switch" role="group" aria-label="Mode de rendu des vidéos">
+        <button type="button" class="mode-switch__btn is-active" data-mode="cinematic" aria-pressed="true">
+          <span class="mode-switch__dot" aria-hidden="true"></span>Final
+        </button>
+        <button type="button" class="mode-switch__btn" data-mode="blocking" aria-pressed="false">
+          <span class="mode-switch__dot" aria-hidden="true"></span>Prévisualisation
+        </button>
+      </div>
+    </header>
+
+    <main id="contenu">
+      <!-- ================================================================
+           CONCEPT 1 — Le hublot de l'icebreaker
+           Héros + première section de storytelling pilotée par le scroll.
+           ================================================================ -->
+      <section class="story story--hero" id="concept-1" data-concept="1" data-scroll="3.4" aria-labelledby="t1">
+        <div class="story__stick">
+          <div class="stage">
+            <div class="stage__media" data-scroll-video data-exclusive data-concept-slug="01-hublot-icebreaker">
+              <video class="layer layer--cinematic" muted playsinline preload="metadata" disablepictureinpicture disableremoteplayback poster="./assets/img/01-hublot-icebreaker-cinematic.jpg"></video>
+              <video class="layer layer--blocking" muted playsinline preload="metadata" disablepictureinpicture disableremoteplayback poster="./assets/img/01-hublot-icebreaker-blocking.jpg"></video>
+              <div class="stage__vignette" aria-hidden="true"></div>
+              <div class="stage__whiteout" aria-hidden="true"></div>
+            </div>
+
+            <div class="stage__copy stage__copy--hero">
+              <p class="eyebrow" data-enter="0" data-exit="2.4" style="transition-delay: 0ms">Concept 01 · Le hublot</p>
+              <h1 id="t1" data-enter="0" data-exit="2.4" style="transition-delay: 90ms">Franchir le&nbsp;hublot</h1>
+              <p class="lede" data-enter="0" data-exit="2.4" style="transition-delay: 190ms">
+                Un site n'est pas une page, c'est une traversée. Ici la caméra quitte la cabine de
+                l'icebreaker et se pose sur la <em>cathédrale de glace</em>. C'est votre scroll qui filme.
+              </p>
+              <div class="scroll-cue" data-enter="0" data-exit="1.8" style="transition-delay: 320ms" aria-hidden="true">
+                <span>Scrollez pour lancer la prise</span>
+                <span class="scroll-cue__bar"><i></i></span>
+              </div>
+            </div>
+
+            <div class="stage__beats">
+              <article class="beat beat--center" data-enter="2.6" data-exit="4.5">
+                <h3>Le hublot</h3>
+                <p>La banquise apparaît dans le cercle de verre. Tout le cadre tient dans ce trou de 1 mètre.</p>
+              </article>
+              <article class="beat beat--bottom" data-enter="4.8" data-exit="6.9">
+                <h3>Passage</h3>
+                <p>La caméra traverse. La coque sort du champ : plus rien ne rappelle la cabine.</p>
+              </article>
+              <article class="beat beat--left" data-enter="7.2" data-exit="8.8">
+                <h3>Déploiement</h3>
+                <p>Le fjord gelé s'ouvre : champ de banquise, brume basse, aurores au fond.</p>
+              </article>
+              <article class="beat beat--center beat--hero" data-enter="8.9">
+                <h3>La cathédrale</h3>
+                <p>Le plan se pose. Tout le mouvement précédent n'existait que pour ce cadre-là.</p>
+              </article>
+            </div>
+
+            <div class="stage__hud" aria-hidden="true">
+              <span class="hud__chip"><b data-hud-concept>01</b> · hublot → monument</span>
+              <span class="hud__chip"><b data-hud-time>0.0</b> s / <b data-hud-duration>10.0</b> s</span>
+              <span class="hud__chip hud__chip--mode" data-hud-mode>rendu cinématique</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           LE TEST — comparateur prévisualisation / final
+           ================================================================ -->
+      <section class="compare" id="compare" data-scroll="2.6" aria-labelledby="t-compare">
+        <div class="compare__stick">
+          <div class="stage stage--compare">
+            <div class="compare__media" data-scroll-video data-concept-slug="01-hublot-icebreaker" data-split="0.5" id="compare-split">
+              <video class="layer layer--blocking" muted playsinline preload="metadata" disablepictureinpicture disableremoteplayback poster="./assets/img/01-hublot-icebreaker-blocking.jpg"></video>
+              <div class="compare__reveal">
+                <video class="layer layer--cinematic" muted playsinline preload="metadata" disablepictureinpicture disableremoteplayback poster="./assets/img/01-hublot-icebreaker-cinematic.jpg"></video>
+              </div>
+              <div class="compare__divider" aria-hidden="true"><span class="compare__grip"></span></div>
+              <div class="compare__tags" aria-hidden="true">
+                <span class="compare__tag compare__tag--left">Blocking · Blender-like</span>
+                <span class="compare__tag compare__tag--right">Cinématique · Seedance-like</span>
+              </div>
+            </div>
+
+            <div class="compare__panel">
+              <p class="eyebrow">Le test de la nouveauté</p>
+              <h2 id="t-compare">La même prise de vue, rendue deux fois</h2>
+              <p>
+                À gauche la passe <strong>blocking</strong> : c'est le moment où l'on valide le cadrage, le
+                rythme et la trajectoire, sans se soucier de la matière. À droite la passe
+                <strong>cinématique</strong>. Le chemin de caméra est <em>strictement identique</em>, image
+                pour image : seule la matière change.
+              </p>
+              <p class="compare__hint">
+                Faites glisser la poignée, puis scrollez : les deux plans avancent ensemble.
+              </p>
+              <ul class="compare__facts">
+                <li><span data-metric="frames">300</span> images rendues par passe</li>
+                <li><span data-metric="poses">8</span> poses de caméra</li>
+                <li><span data-metric="offset">0</span> écart de mouvement entre les deux passes</li>
+              </ul>
+              <div class="compare__switches">
+                <button type="button" class="chip" data-compare-preset="0.5">50 / 50</button>
+                <button type="button" class="chip" data-compare-preset="0.001">Tout final</button>
+                <button type="button" class="chip" data-compare-preset="0.999">Tout blocking</button>
+                <button type="button" class="chip" id="compare-animate">Balayer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           CONCEPT 2 — La fenêtre du tunnel de glace (+ transition au blanc)
+           ================================================================ -->
+      <section class="story" id="concept-2" data-concept="2" data-scroll="3.0" aria-labelledby="t2">
+        <div class="story__stick">
+          <div class="stage">
+            <div class="stage__media" data-scroll-video data-exclusive data-concept-slug="02-fenetre-tunnel">
+              <video class="layer layer--cinematic" muted playsinline preload="metadata" disablepictureinpicture disableremoteplayback poster="./assets/img/02-fenetre-tunnel-cinematic.jpg"></video>
+              <video class="layer layer--blocking" muted playsinline preload="metadata" disablepictureinpicture disableremoteplayback poster="./assets/img/02-fenetre-tunnel-blocking.jpg"></video>
+              <div class="stage__vignette" aria-hidden="true"></div>
+              <div class="stage__whiteout" aria-hidden="true"></div>
+            </div>
+
+            <div class="stage__copy stage__copy--left">
+              <p class="eyebrow" data-enter="0" data-exit="3.4">Concept 02 · La fenêtre</p>
+              <h2 id="t2" data-enter="0.05" data-exit="3.4">Ce que le blanc cache</h2>
+              <p class="lede" data-enter="0.12" data-exit="3.4">
+                Sortir par la fenêtre, révéler un pic qui crève la mer de nuages, puis plonger dedans.
+                Le plan se termine dans un blanc total — et ce blanc devient la transition vers la
+                section suivante.
+              </p>
+            </div>
+
+            <div class="stage__beats">
+              <article class="beat beat--right" data-enter="3.6" data-exit="5.6">
+                <h3>L'ouverture</h3>
+                <p>On quitte le tunnel. La lumière change de nature : plus de matière, que de la brume.</p>
+              </article>
+              <article class="beat beat--bottom" data-enter="5.8" data-exit="8.0">
+                <h3>Le pic</h3>
+                <p>La montagne n'apparaît pas <em>derrière</em> les nuages : elle <em>traverse</em>.</p>
+              </article>
+              <article class="beat beat--center" data-enter="8.4" data-exit="9.4">
+                <h3>Plongée</h3>
+                <p>La caméra entre dans la couche. Le brouillard monte, le contraste s'effondre.</p>
+              </article>
+            </div>
+
+            <div class="stage__hud" aria-hidden="true">
+              <span class="hud__chip"><b data-hud-concept>02</b> · tunnel → nuages</span>
+              <span class="hud__chip"><b data-hud-time>0.0</b> s / <b data-hud-duration>10.0</b> s</span>
+              <span class="hud__chip hud__chip--mode" data-hud-mode>rendu cinématique</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           CONCEPT 3 — La relique explosée
+           ================================================================ -->
+      <section class="story story--tight" id="relique" data-concept="3" data-scroll="2.6" aria-labelledby="t3">
+        <div class="story__stick">
+          <div class="stage">
+            <div class="stage__media" data-scroll-video data-exclusive data-concept-slug="03-relique-explosee">
+              <video class="layer layer--cinematic" muted playsinline preload="metadata" disablepictureinpicture disableremoteplayback poster="./assets/img/03-relique-explosee-cinematic.jpg"></video>
+              <video class="layer layer--blocking" muted playsinline preload="metadata" disablepictureinpicture disableremoteplayback poster="./assets/img/03-relique-explosee-blocking.jpg"></video>
+              <div class="stage__vignette" aria-hidden="true"></div>
+              <div class="stage__whiteout" aria-hidden="true"></div>
+            </div>
+
+            <div class="stage__copy stage__copy--left">
+              <p class="eyebrow" data-enter="0" data-exit="1.2">Concept 03 · La relique</p>
+              <h2 id="t3" data-enter="0.05" data-exit="1.2">Ouvrir la relique</h2>
+              <p class="lede" data-enter="0.12" data-exit="1.2">
+                Une vue éclatée est presque impossible à décrire en texte : c'est exactement le genre de
+                plan où le <em>blocking</em> change tout.
+              </p>
+            </div>
+
+            <div class="stage__beats">
+              <article class="feature feature--right" data-enter="3.4" data-exit="4.9">
+                <p class="feature__tag">Vue éclatée · 6 couches</p>
+                <h3>Cœur cryogénique</h3>
+                <p>
+                  Le noyau de la relique est maintenu à −78 °C par une coque à six couches. Le plan ouvre
+                  l'objet dans l'ordre exact de l'assemblage : le rendu cinématique ne réinterprète jamais
+                  la mécanique.
+                </p>
+                <ul class="feature__list">
+                  <li><b>01</b> Enveloppe de glace vive</li>
+                  <li><b>02</b> Anneaux de tension</li>
+                  <li><b>03</b> Coques de maintien</li>
+                  <li><b>04</b> Éclats satellites</li>
+                </ul>
+              </article>
+              <article class="beat beat--bottom" data-enter="0.4" data-exit="2.6">
+                <h3>Intact</h3>
+                <p>Deux secondes pour installer l'objet — et pour que le scroll cesse d'être un effet.</p>
+              </article>
+            </div>
+
+            <div class="stage__hud" aria-hidden="true">
+              <span class="hud__chip"><b data-hud-concept>03</b> · vue éclatée</span>
+              <span class="hud__chip"><b data-hud-time>0.0</b> s / <b data-hud-duration>5.0</b> s</span>
+              <span class="hud__chip hud__chip--mode" data-hud-mode>rendu cinématique</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           CONCEPT 4 — Le gardien de glace (features gauche / droite)
+           ================================================================ -->
+      <section class="story story--tall" id="gardien" data-concept="4" data-scroll="4.2" aria-labelledby="t4">
+        <div class="story__stick">
+          <div class="stage">
+            <div class="stage__media" data-scroll-video data-exclusive data-concept-slug="04-gardien-glace">
+              <video class="layer layer--cinematic" muted playsinline preload="metadata" disablepictureinpicture disableremoteplayback poster="./assets/img/04-gardien-glace-cinematic.jpg"></video>
+              <video class="layer layer--blocking" muted playsinline preload="metadata" disablepictureinpicture disableremoteplayback poster="./assets/img/04-gardien-glace-blocking.jpg"></video>
+              <div class="stage__vignette" aria-hidden="true"></div>
+              <div class="stage__whiteout" aria-hidden="true"></div>
+            </div>
+
+            <div class="stage__copy stage__copy--center">
+              <p class="eyebrow" data-enter="0" data-exit="1.4">Concept 04 · Le gardien</p>
+              <h2 id="t4" data-enter="0.05" data-exit="1.4">Le gardien de glace</h2>
+            </div>
+
+            <div class="stage__beats">
+              <article class="beat beat--bottom" data-enter="1.6" data-exit="3.0">
+                <h3>Dégainage</h3>
+                <p>La lame sort. Le mouvement du bras et l'émission de la lame sont deux courbes séparées.</p>
+              </article>
+              <article class="beat beat--right" data-enter="3.2" data-exit="5.8">
+                <h3>Orbite</h3>
+                <p>La caméra tourne : la cape, l'épaule, l'épaisseur de la glace. Un texte ici ne coûte rien au plan.</p>
+              </article>
+
+              <!-- Blocs feature : le gardien part à droite, le texte occupe la gauche -->
+              <article class="feature feature--left" data-enter="8.6" data-exit="10.6">
+                <p class="feature__tag">Après le balayage</p>
+                <h3>Le cadre s'ouvre à gauche</h3>
+                <p>
+                  À 9 secondes la caméra <em>whip</em> : le personnage glisse dans le tiers droit. Le tiers
+                  gauche devient une zone calme — c'est la place réservée à ce bloc. La mise en page et le
+                  montage sont décidés <strong>avant</strong> la génération de la vidéo.
+                </p>
+                <ul class="feature__list">
+                  <li><b>01</b> Masque de givre adaptatif</li>
+                  <li><b>02</b> Lame à mémoire de forme</li>
+                  <li><b>03</b> Cape à 4 000 écailles</li>
+                </ul>
+              </article>
+
+              <!-- Le gardien part à gauche, le texte occupe la droite -->
+              <article class="feature feature--right" data-enter="11.2">
+                <p class="feature__tag">Second balayage</p>
+                <h3>Puis la place change de côté</h3>
+                <p>
+                  Douzième seconde : second balayage. Le personnage passe à gauche, le tiers droit se
+                  libère. Deux blocs, deux côtés, <em>une seule</em> vidéo continue — c'est le point que
+                  la vidéo de référence insiste : un plan continu bat trois plans coupés.
+                </p>
+                <ul class="feature__list">
+                  <li><b>04</b> Combinaison isotherme 14 h</li>
+                  <li><b>05</b> Balise de détresse sous-glace</li>
+                  <li><b>06</b> Cockpit de givre actif</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="stage__hud" aria-hidden="true">
+              <span class="hud__chip"><b data-hud-concept>04</b> · gardien</span>
+              <span class="hud__chip"><b data-hud-time>0.0</b> s / <b data-hud-duration>12.0</b> s</span>
+              <span class="hud__chip hud__chip--mode" data-hud-mode>rendu cinématique</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           CONCEPT 5 — Plan plein écran (déploiement)
+           ================================================================ -->
+      <section class="reveal" id="survol" data-concept="5" data-scroll="2.2" aria-labelledby="t5">
+        <div class="reveal__stick">
+          <div class="reveal__frame" data-reveal>
+            <div class="stage__media" data-scroll-video data-exclusive data-concept-slug="05-survol-glacier">
+              <video class="layer layer--cinematic" muted playsinline preload="metadata" disablepictureinpicture disableremoteplayback poster="./assets/img/05-survol-glacier-cinematic.jpg"></video>
+              <video class="layer layer--blocking" muted playsinline preload="metadata" disablepictureinpicture disableremoteplayback poster="./assets/img/05-survol-glacier-blocking.jpg"></video>
+              <div class="stage__vignette" aria-hidden="true"></div>
+            </div>
+            <div class="reveal__caption">
+              <p class="eyebrow" id="t5">Concept 05 · Survol</p>
+              <h2>Le glacier, de plus haut</h2>
+              <p class="lede">
+                Le plan plein écran n'est pas un décor : c'est la respiration qui laisse le lecteur
+                reprendre son souffle après deux blocs de texte. Il est découpé pour le scroll exactement
+                comme les autres.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           WORKFLOW — la nouveauté de la vidéo, décomposée
+           ================================================================ -->
+      <section class="workflow" id="workflow" aria-labelledby="t-workflow">
+        <header class="section-head">
+          <p class="eyebrow">La nouveauté, décomposée</p>
+          <h2 id="t-workflow">Cinq étapes, un seul chemin de caméra</h2>
+          <p class="lede">
+            La vidéo de référence ne présente pas un nouvel outil : elle présente un
+            <strong>pont</strong>. Blender sert à <em>blocker</em> la prise de vue, un LLM la traduit en
+            prompt, un générateur vidéo en produit la matière, et le web la fait jouer au scroll. Ce POC
+            rejoue ce pont de bout en bout, localement.
+          </p>
+        </header>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step__num">01</span>
+            <div class="step__body">
+              <h3>Blocker le plan</h3>
+              <p>
+                Des formes simples, pas de matière : on ne cherche que la silhouette, la composition et la
+                trajectoire. Dans la vidéo, c'est Blender. Ici, c'est un générateur de scène procédural qui
+                produit exactement la même chose — un objet, des formes plates, une caméra.
+              </p>
+              <p class="step__meta"><b>Entrée</b> une intention en une phrase · <b>Sortie</b> un chemin de caméra</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__num">02</span>
+            <div class="step__body">
+              <h3>Sortir un playblast</h3>
+              <p>
+                On exporte une vidéo volontairement pauvre, qui contient pourtant <em>exactement</em> le
+                mouvement voulu. C'est le contrat : tout ce qui suit doit le respecter au pixel près.
+              </p>
+              <p class="step__meta"><b>Entrée</b> le chemin de caméra · <b>Sortie</b> la passe « blocking »</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__num">03</span>
+            <div class="step__body">
+              <h3>Faire écrire le prompt</h3>
+              <p>
+                On donne la vidéo de blocking à un modèle de langage et on lui demande un prompt
+                <em>seconde par seconde</em>. Le modèle ne devine plus le mouvement : il le lit.
+              </p>
+              <p class="step__meta"><b>Entrée</b> la passe blocking · <b>Sortie</b> un prompt daté</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__num">04</span>
+            <div class="step__body">
+              <h3>Générer la matière</h3>
+              <p>
+                Le prompt part chez un générateur vidéo, accompagné d'une image de référence du sujet réel.
+                On obtient un plan cinématique dont le mouvement est <strong>déjà validé</strong>.
+              </p>
+              <p class="step__meta"><b>Entrée</b> le prompt daté · <b>Sortie</b> la passe « cinématique »</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__num">05</span>
+            <div class="step__body">
+              <h3>Poser la vidéo dans la page</h3>
+              <p>
+                La vidéo ne joue pas toute seule : son temps est <em>écrit par le scroll</em>. Chaque bloc
+                de texte est ancré à un instant du plan, et les balayages de caméra libèrent la place dont
+                la mise en page a besoin.
+              </p>
+              <p class="step__meta"><b>Entrée</b> la passe cinématique · <b>Sortie</b> une section scrollable</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="workflow__note">
+          <h3>Ce que ce POC remplace</h3>
+          <div class="workflow__cols">
+            <div>
+              <h4>Dans la vidéo</h4>
+              <ul>
+                <li>Blender 5.2 + plugin Higgsfield</li>
+                <li>Render « playblast » basse fidélité</li>
+                <li>Claude pour écrire le prompt</li>
+                <li>Seedance 2.5 (Higgsfield) pour la matière</li>
+                <li>Site sans code (Framer / Webflow)</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Dans ce POC</h4>
+              <ul>
+                <li>Générateur de scène procédural (Three.js) piloté par des specs versionnées</li>
+                <li>Passe « blocking » : matériaux plats, calques atmosphériques masqués</li>
+                <li>Prompts seconde par seconde générés depuis les poses de caméra</li>
+                <li>Passe « cinématique » : glace physique, brouillard, bloom, grain, étalonnage</li>
+                <li>Site statique écrit à la main, zéro dépendance réseau</li>
+              </ul>
+            </div>
+          </div>
+          <p class="workflow__caveat">
+            <strong>Ce qui n'est pas remplacé :</strong> la passe cinématique est rendue par un moteur
+            temps réel, pas par un modèle génératif. Elle prouve la <em>structure</em> du workflow — le
+            chemin de caméra partagé — pas la qualité d'un générateur vidéo.
+          </p>
+        </div>
+
+        <div class="prompts" id="prompts">
+          <h3>Prompts seconde par seconde, générés depuis les poses de caméra</h3>
+          <p class="prompts__intro">
+            Dans la vidéo, c'est le modèle de langage qui rédige ces prompts à partir du playblast. Ici,
+            ils sont dérivés mécaniquement des poses de caméra : chaque changement de pose produit un
+            segment daté. C'est le même contrat, écrit plus bas dans la chaîne.
+          </p>
+          <div class="prompts__grid" id="prompts-grid" data-generated></div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           FAQ
+           ================================================================ -->
+      <section class="faq" id="faq" aria-labelledby="t-faq">
+        <header class="section-head">
+          <p class="eyebrow">Questions directes</p>
+          <h2 id="t-faq">Ce que ce POC démontre — et ce qu'il ne démontre pas</h2>
+        </header>
+        <div class="faq__list" data-accordion>
+          <details open>
+            <summary>Pourquoi rendre la même scène deux fois ?</summary>
+            <p>
+              Parce que c'est le cœur du workflow de la vidéo. Le <em>blocking</em> n'est pas une étape
+              jetable : c'est la seule source de vérité du mouvement. En rendant deux fois le même chemin
+              de caméra, on voit immédiatement que la seconde passe n'invente rien — elle habille. C'est
+              aussi la garantie qu'un générateur vidéo ne pourra pas « réinterpréter » le plan.
+            </p>
+          </details>
+          <details>
+            <summary>Le scroll qui contrôle une vidéo, est-ce que ça rame ?</summary>
+            <p>
+              Non, à trois conditions, toutes appliquées ici : un GOP très court (une image-clé toutes les
+              7 images) pour que chaque <em>seek</em> soit quasi instantané, l'option
+              <code>faststart</code> pour que l'index du fichier soit en tête, et une boucle
+              <code>requestAnimationFrame</code> qui n'écrit <code>currentTime</code> que lorsque l'écart
+              dépasse un seuil. Sur un fichier local, le coût est négligeable.
+            </p>
+          </details>
+          <details>
+            <summary>Quel est le gain réel par rapport à « je demande une vidéo à l'IA » ?</summary>
+            <p>
+              Le mouvement cesse d'être une devinette. Dans le workflow naïf, on écrit une description,
+              on obtient un plan, on le trouve presque bon, on reformule — la composition et la mise en
+              page dépendent du hasard. Ici, le plan est décidé avant la génération : on sait où le sujet
+              se trouve à la seconde 9, donc on sait quel tiers de l'écran est libre pour le texte.
+            </p>
+          </details>
+          <details>
+            <summary>Et l'accessibilité, et le mobile ?</summary>
+            <p>
+              Le scrub vidéo est désactivé si <code>prefers-reduced-motion</code> est actif, et sur les
+              appareils modestes le site retombe sur des posters fixes. Toute l'information textuelle
+              existe en dehors des vidéos : rien n'est enfermé dans un plan.
+            </p>
+          </details>
+          <details>
+            <summary>Combien de temps pour produire ce POC ?</summary>
+            <p>
+              Le pipeline est reproductible : <code>node render/capture.mjs all</code> régénère les dix
+              fichiers vidéo depuis les specs de scène, puis <code>node tools/build.mjs</code> construit
+              le site. Aucun asset binaire n'est indispensable : tout est dérivé du code versionné.
+            </p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer__top">
+        <div class="brand brand--footer">
+          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M16 2 29 9.5v13L16 30 3 22.5v-13z" fill="none" stroke="currentColor" stroke-width="1.4" />
+            <path d="M16 8v16M9 12l14 8M23 12 9 20" stroke="currentColor" stroke-width="1" opacity=".75" />
+          </svg>
+          <span class="brand__word">BORÉAL</span>
+        </div>
+        <p class="site-footer__pitch">
+          POC de storytelling scroll-driven sur le thème de la glace, construit pour éprouver le workflow
+          « blocking → prompt → vidéo générée → section scrollable » présenté par Kyle Skelly.
+        </p>
+      </div>
+      <div class="site-footer__grid">
+        <div>
+          <h4>Séquences</h4>
+          <ul>
+            <li><a href="#concept-1">01 · Le hublot</a></li>
+            <li><a href="#concept-2">02 · La fenêtre</a></li>
+            <li><a href="#relique">03 · La relique</a></li>
+            <li><a href="#gardien">04 · Le gardien</a></li>
+            <li><a href="#survol">05 · Survol</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Pipeline</h4>
+          <ul>
+            <li><code>render/scenes/*</code> — specs de scène</li>
+            <li><code>render/lib/*</code> — kit glace + rig caméra</li>
+            <li><code>render/capture.mjs</code> — rendu + encodage</li>
+            <li><code>tools/build.mjs</code> — build du site</li>
+            <li><code>tests/e2e.mjs</code> — vérifications navigateur</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Mode de rendu</h4>
+          <p class="site-footer__note">
+            Le sélecteur en haut de page bascule <em>toutes</em> les séquences entre la passe blocking et
+            la passe cinématique. Essayez-le en cours de scroll : le mouvement ne bouge pas d'un pixel.
+          </p>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>POC local · aucune ressource externe · vidéos générées sur la machine</span>
+        <a href="#top">Revenir en haut</a>
+      </div>
+    </footer>
+
+    <script src="./assets/app.js" defer></script>
+  </body>
+</html>

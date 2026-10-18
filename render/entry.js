@@ -66,13 +66,27 @@ if (!spec) {
     look,
   };
 
+  // Pose de camera exposee apres chaque rendu : elle permet de verifier, hors
+  // du navigateur, que la passe blocking et la passe cinematique partagent
+  // exactement le meme chemin de camera.
+  const capturePose = () => {
+    window.__pose = {
+      pos: kit.camera.position.toArray(),
+      quat: kit.camera.quaternion.toArray(),
+      fov: kit.camera.fov,
+      look: look,
+    };
+  };
+
   window.__renderFrame = (index) => {
     const fps = spec.fps ?? 30;
     kit.renderFrame(index / fps);
+    capturePose();
     return true;
   };
   window.__renderAt = (seconds) => {
     kit.renderFrame(seconds);
+    capturePose();
     return true;
   };
   window.__capture = () => canvas.toDataURL('image/png');

@@ -7,9 +7,15 @@
   "scripts": {
     "serve": "node tools/serve.mjs",
     "build": "node tools/build.mjs",
+    "build:watch": "node tools/build.mjs --watch",
     "render": "node render/capture.mjs",
+    "render:all": "node render/capture.mjs all",
+    "shots": "node render/capture.mjs shots",
     "prompts": "node render/shot-list.mjs",
-    "test": "node tests/e2e.mjs"
+    "test": "node tests/e2e.mjs",
+    "test:assets": "node tests/assets.mjs",
+    "verify": "node render/shot-list.mjs && node tools/build.mjs && node tests/assets.mjs && node tests/determinism.mjs && node tests/e2e.mjs",
+    "test:determinism": "node tests/determinism.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.25.0",

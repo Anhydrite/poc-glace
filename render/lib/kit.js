@@ -220,7 +220,12 @@ export function createRenderKit({ canvas, spec, look = 'cinematic', showHelpers 
   function renderFrame(t) {
     lib.tick(t);
     lighting.update(t);
-    for (const fn of updaters) fn(t, ctx);    rig.apply(camera, t, THREE);
+    // IMPORTANT : la camera est posee AVANT les updaters. Un updater peut ainsi
+    // s'orienter par rapport a la position courante (billboards des faisceaux,
+    // particules...) sans dependre de l'image precedente : le rendu reste
+    // deterministe quel que soit l'ordre d'echantillonnage des temps.
+    rig.apply(camera, t, THREE);
+    for (const fn of updaters) fn(t, ctx);
     applyControls();
     if (composer) {
       composer.update(t);
