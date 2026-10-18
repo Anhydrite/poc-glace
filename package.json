@@ -1,0 +1,19 @@
+{
+  "name": "poc-glace",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "POC: site glace reproduisant le workflow Blender-blocking -> Seedance-cinematic -> scroll storytelling de la video Kyle Skelly",
+  "scripts": {
+    "serve": "node tools/serve.mjs",
+    "build": "node tools/build.mjs",
+    "render": "node render/capture.mjs",
+    "prompts": "node render/shot-list.mjs",
+    "test": "node tests/e2e.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "playwright-core": "1.62.1",
+    "three": "^0.186.1"
+  }
+}

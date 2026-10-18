@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>POC Glace — harness de rendu</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #05080c;
+        overflow: hidden;
+      }
+      #view {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+      }
+      #status {
+        position: fixed;
+        left: 8px;
+        bottom: 6px;
+        font: 11px/1.4 ui-monospace, monospace;
+        color: #6fa8c8;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="view"></canvas>
+    <div id="status">initialisation…</div>
+    <script src="./dist/render.js"></script>
+  </body>
+</html>

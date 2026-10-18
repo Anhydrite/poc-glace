@@ -1,0 +1,15 @@
+import { chromium } from 'playwright-core';
+import { startServer } from '/home/anhydrite/poc_website/tools/serve.mjs';
+const { server, url } = await startServer({ port: 0, root: '/home/anhydrite/poc_website' });
+const browser = await chromium.launch({ executablePath: '/root/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell', args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'] });
+const page = await browser.newPage({ viewport:{width:1280,height:720} });
+page.on('console', m => console.log('[console]', m.type(), m.text()));
+page.on('pageerror', e => console.log('[pageerror]', e.message, '\n', e.stack));
+page.on('requestfailed', r => console.log('[reqfail]', r.url(), r.failure()?.errorText));
+page.on('response', r => { if (r.status() >= 400) console.log('[http]', r.status(), r.url()); });
+await page.goto(url + '/render/index.html?concept=1&look=cinematic&ss=1', { waitUntil:'load' });
+await page.waitForTimeout(4000);
+console.log('ready =', await page.evaluate(() => window.__ready));
+console.log('errors =', JSON.stringify(await page.evaluate(() => window.__errors)));
+console.log('status =', await page.evaluate(() => document.getElementById('status')?.textContent));
+await browser.close(); server.close();
