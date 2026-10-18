@@ -1,5 +1,8 @@
 # BORÉAL — POC « storytelling piloté par le scroll », thème glace
 
+**▶ Site en ligne : <https://anhydrite.github.io/poc-glace/>**
+&nbsp;·&nbsp; `npm install && node tools/build.mjs` pour le faire tourner en local.
+
 Ce dépôt est un **POC** construit pour éprouver, de bout en bout, la nouveauté présentée dans la
 vidéo *« Claude + Blender + Seedance 2.5 = Insane Websites »* (Kyle Skelly,
 <https://youtu.be/mvfo3pUiCCA>) :
