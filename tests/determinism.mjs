@@ -227,7 +227,7 @@ async function main() {
         ? hard.map((d) => `${d.t}s (Δmax ${d.max}, Δmoy ${d.avg?.toFixed(2)}, ${(100 * (d.share ?? 1)).toFixed(2)}% des pixels)`).join(', ')
         : `${exact.length}/${times.length} images strictement identiques` +
           (drifting.length
-            ? `, ${drifting.length} à ±1/255 près sur ${(100 * Math.max(...drifting.map((d) => d.share))).toFixed(2)}% des pixels (arrondi du rasteriseur logiciel)`
+            ? `, ${drifting.length} à ±1/255 près sur ${(1e6 * Math.max(...drifting.map((d) => d.share))).toFixed(0)} ppm des pixels (arrondi du rasteriseur logiciel)`
             : ''),
     );
 
