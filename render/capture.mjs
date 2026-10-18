@@ -292,6 +292,19 @@ async function runMovie(conceptKey, look, opts = {}) {
       `[ok] ${path.relative(ROOT, outFile)}  ${(stat.size / 1024 / 1024).toFixed(2)} Mo  ` +
         `(rendu ${res.elapsed.toFixed(1)}s, encodage ${((Date.now() - t1) / 1000).toFixed(1)}s)`,
     );
+
+    // Les sequences PNG intermediaires pesent plusieurs centaines de Mo par
+    // film : on les efface une fois le MP4 ecrit. --keep-frames les conserve
+    // (utile pour inspecter une image precise).
+    if (!opts.keepFrames && !flag('keep-frames', false)) {
+      let freed = 0;
+      for (const f of fs.readdirSync(outDir)) {
+        if (!f.startsWith('frame_') || !f.endsWith('.png')) continue;
+        freed += fs.statSync(path.join(outDir, f)).size;
+        fs.rmSync(path.join(outDir, f));
+      }
+      if (freed) console.log(`[clean] ${(freed / 1024 / 1024).toFixed(0)} Mo d'images intermediaires liberes`);
+    }
     return outFile;
   } finally {
     await session.browser.close();

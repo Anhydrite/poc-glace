@@ -116,6 +116,8 @@ tests/
 docs/
   reference-video.md         # la vidéo de référence, passage par passage
   prompts-seedance.md        # prompts générés, lisibles
+  extending.md               # ajouter une sixième séquence (règles à respecter)
+  visual-review.md           # protocole de revue visuelle, défauts trouvés et corrigés
 ```
 
 ### Pourquoi deux passes plutôt qu'un filtre à l'affichage ?
@@ -181,12 +183,20 @@ par la spec de scène, et ne sont pas des vidéos de test laissées par erreur.
 ### `tests/determinism.mjs`
 Deux propriétés dont dépend tout le reste :
 
-1. **Déterminisme** — rendre les mêmes instants dans un ordre différent produit des images
-   strictement identiques (empreinte SHA-256 comparée). Sans cela, la comparaison previz/final
-   n'aurait aucun sens.
+1. **Indépendance à l'ordre d'échantillonnage** — rendre les mêmes instants dans un ordre différent
+   produit les mêmes images. Le test compare d'abord les empreintes SHA-256 ; si elles diffèrent, il
+   mesure l'écart réel (lecteur PNG interne, aucune dépendance) et ne tolère qu'un écart de
+   **± 1/255 sur moins de 0,5 % des pixels**.
+   Cette tolérance n'est pas un confort : le rendu hors-ligne passe par un rasteriseur **logiciel**
+   (SwiftShader) dont le JIT peut contracter les opérations flottantes différemment d'une compilation
+   à l'autre. On l'a mesuré : sur le concept 05, l'écart apparaît parfois, toujours sur la même bande
+   d'aurore (dont le bruit est calculé avec des `sin`), toujours à ± 1/255, sur ~0,1 % des pixels. Au
+   delà de ces bornes, le test échoue — et il a effectivement attrapé une vraie dépendance à l'ordre
+   (les updaters qui tournaient avant l'application de la caméra, corrigé dans `render/lib/kit.js`).
 2. **Chemin de caméra partagé** — pour un même instant, la pose de caméra (position, orientation,
-   focale) est **identique** dans les deux looks, à 1e-6 près. C'est la définition opérationnelle du
-   workflow de la vidéo : le mouvement est l'artefact partagé, la matière n'est qu'un habillage.
+   focale) est **identique** dans les deux looks. Le test mesure un **écart nul** sur toutes les poses
+   testées des cinq concepts : c'est la vérification opérationnelle du workflow de la vidéo — le
+   mouvement est l'artefact partagé, la matière n'est qu'un habillage.
 
 ### `tests/e2e.mjs`
 Ne se contente pas de charger la page. Il mesure :
@@ -220,6 +230,13 @@ section **et** la progression dans le plan (par exemple `04-monument.png`, `10-g
   lisibilité d'un *previz*.
 - Les vidéos sont commitables mais volumineuses (~37 Mo) : elles sont ignorées par Git et
   régénérables par `npm run render:all`.
+- Le rendu hors-ligne n'est pas **bit-à-bit** reproductible : le rasteriseur logiciel introduit
+  parfois un écart de ± 1/255 sur une fraction infime des pixels (voir `tests/determinism.mjs`). Le
+  mouvement, la composition et le cadrage, eux, sont exactement reproductibles — et c'est ce qui
+  compte pour ce POC.
+- La revue visuelle n'a pas pu être déléguée à l'agent visuel prévu (crédits épuisés et modèle par
+  défaut absent du registre). Elle a été faite manuellement selon un protocole traçable, et a
+  trouvé deux défauts réels depuis corrigés : voir `docs/visual-review.md`.
 
 ## 7 bis. Dette technique identifiée (et non masquée)
 
