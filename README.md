@@ -189,10 +189,13 @@ Deux propriétés dont dépend tout le reste :
    **± 1/255 sur moins de 0,5 % des pixels**.
    Cette tolérance n'est pas un confort : le rendu hors-ligne passe par un rasteriseur **logiciel**
    (SwiftShader) dont le JIT peut contracter les opérations flottantes différemment d'une compilation
-   à l'autre. On l'a mesuré : sur le concept 05, l'écart apparaît parfois, toujours sur la même bande
-   d'aurore (dont le bruit est calculé avec des `sin`), toujours à ± 1/255, sur ~0,1 % des pixels. Au
-   delà de ces bornes, le test échoue — et il a effectivement attrapé une vraie dépendance à l'ordre
-   (les updaters qui tournaient avant l'application de la caméra, corrigé dans `render/lib/kit.js`).
+   à l'autre. Mesuré sur plusieurs exécutions : l'écart apparaît **parfois**, sur le concept 04 ou le
+   concept 05 selon les cas — donc il ne dépend pas de la scène mais du compilateur de shaders — il
+   vaut toujours ± 1/255, et il ne touche que **12 à 24 ppm des pixels** (une dizaine de pixels, sur
+   les bords de la bande d'aurore dont le bruit est calculé avec des `sin`). Au-delà de ces bornes, le
+   test échoue — et il a effectivement attrapé une vraie dépendance à l'ordre : les updaters qui
+   tournaient avant l'application de la caméra (corrigé dans `render/lib/kit.js`), laquelle produisait
+   une image entièrement blanche.
 2. **Chemin de caméra partagé** — pour un même instant, la pose de caméra (position, orientation,
    focale) est **identique** dans les deux looks. Le test mesure un **écart nul** sur toutes les poses
    testées des cinq concepts : c'est la vérification opérationnelle du workflow de la vidéo — le
@@ -231,7 +234,7 @@ section **et** la progression dans le plan (par exemple `04-monument.png`, `10-g
 - Les vidéos sont commitables mais volumineuses (~37 Mo) : elles sont ignorées par Git et
   régénérables par `npm run render:all`.
 - Le rendu hors-ligne n'est pas **bit-à-bit** reproductible : le rasteriseur logiciel introduit
-  parfois un écart de ± 1/255 sur une fraction infime des pixels (voir `tests/determinism.mjs`). Le
+  parfois un écart de ± 1/255 sur 12 à 24 ppm des pixels (voir `tests/determinism.mjs`). Le
   mouvement, la composition et le cadrage, eux, sont exactement reproductibles — et c'est ce qui
   compte pour ce POC.
 - La revue visuelle n'a pas pu être déléguée à l'agent visuel prévu (crédits épuisés et modèle par
